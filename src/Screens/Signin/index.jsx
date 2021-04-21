@@ -40,9 +40,9 @@ const Signin = () => {
                     <Label>Password</Label>
                     <Input required type="password" name="password" onChange={changeInputValue} placeholder='Password' />
                 </Form.Field>
-                <Link to={{ pathname: "/home" }}>
+                {/* <Link to={{ pathname: "/home" }}> */}
                     <Button positive onClick={signIn} type='submit'>SignIn</Button>
-                </Link>
+                {/* </Link> */}
             </Form>
         </Container>
     )

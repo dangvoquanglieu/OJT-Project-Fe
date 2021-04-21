@@ -88,9 +88,9 @@ const Signup = () => {
                         <Input required name="phoneNumber" onChange={changeInputValue} placeholder='PhoneNumber' />
                     </Form.Field>
                 </Form.Group>
-                <Link to={{ pathname: "/signin" }}>
-                    <Button onClick={signUp} positive type='submit'>SignUp</Button>
-                </Link>
+                {/* <Link to={{ pathname: "/signin" }}> */}
+                    <Button onClick={signUp} positive >SignUp</Button>
+                {/* </Link> */}
             </Form>
         </Container >
     )
