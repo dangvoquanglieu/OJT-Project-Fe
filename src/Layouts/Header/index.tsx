@@ -1,17 +1,17 @@
 import { Button, Menu, Dropdown } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import { useSelector } from "react-redux";
-import {useDispatch} from "react-redux";
-import {logoutUser} from "../../Redux/Action/userAction"
-import {RootState} from "../../Configs/store"
+import { useDispatch } from "react-redux";
+import { logoutUser } from "../../Redux/Action/userAction"
+import { RootState } from "../../Configs/store"
 
 const HeaderLayout = () => {
     //lấy đối tượng người dùng đăng nhập từ store;
-    const customer = useSelector((state:RootState) => state.userReducer.credentials);
+    const customer = useSelector((state: RootState) => state.userReducer.credentials);
     let name = {
         firstName: ""
     };
-    if(customer != null){
+    if (customer != null) {
         name = customer;
     }
     const dispatch = useDispatch();
@@ -23,6 +23,11 @@ const HeaderLayout = () => {
         //nếu customer = null (người dùng chưa signin) thì hiển thị hai button signin, signup trên header
         //nếu customer != null (người dùng đã signin) thì hiển thị firstName (dropdown có chức năng logout)
         <Menu size='massive'>
+            <Menu.Menu position="left">
+                <Link to="/">
+                    Home
+                </Link>
+            </Menu.Menu>
             {customer === null ?
                 <Menu.Menu position='right'>
                     <Menu.Item>
@@ -37,11 +42,11 @@ const HeaderLayout = () => {
                     </Menu.Item>
                 </Menu.Menu> :
                 <Menu.Menu position='right'> <Menu.Item>
-                        <Dropdown text={name.firstName}>
-                            <Dropdown.Menu>
-                                <Dropdown.Item text='Logout' onClick={logout}/>
-                            </Dropdown.Menu>
-                        </Dropdown>
+                    <Dropdown text={name.firstName}>
+                        <Dropdown.Menu>
+                            <Dropdown.Item text='Logout' onClick={logout} />
+                        </Dropdown.Menu>
+                    </Dropdown>
                 </Menu.Item></Menu.Menu>
             }
         </Menu>

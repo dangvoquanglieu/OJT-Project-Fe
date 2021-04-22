@@ -2,7 +2,6 @@ import { Container, Button, Form, Input, Label, Header } from 'semantic-ui-react
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { sendInforUserSignin } from '../../Redux/Action/userAction';
-import { Link } from 'react-router-dom';
 
 const Signin = () => {
 
