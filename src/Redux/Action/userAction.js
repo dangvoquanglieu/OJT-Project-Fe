@@ -1,7 +1,8 @@
-import { ACTION } from "../ActionType/index";
-import { dbData } from "../../Configs/request";
+import { ACTION } from "../ActionType/actionType.ts";
+import { dbData } from "../../Configs/request.ts";
 
 const ROOT_URL = "https://localhost:44381/api/customers/";
+
 export const sendInforUserSignin = (data) => dispath => {
     dbData(ROOT_URL + 'authenticate').createData(data)
         .then(res => {
@@ -28,5 +29,6 @@ export const logoutUser = () => dispath => {
     dispath({
         type: ACTION.LOGOUT_USER,
     });
+    //xóa thông tin trên localStorage
     localStorage.clear('credentials');
 }

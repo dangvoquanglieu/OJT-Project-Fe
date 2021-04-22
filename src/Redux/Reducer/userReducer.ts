@@ -1,10 +1,10 @@
-import { ACTION } from "../ActionType/index";
+import { ACTION } from "../ActionType/actionType";
 
 let initialState = {
     credentials: null
 };
 
-const reducer = (state = initialState, { type, payload }) => {
+const reducer = (state = initialState, { type = "", payload = null}) => {
     switch (type) {
         case ACTION.SIGNIN_USER:
             state.credentials = payload;
