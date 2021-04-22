@@ -27,7 +27,7 @@ const Signup = () => {
     const [equalPass, setEqualPass] = useState(true);
 
     //hàm xử lý form 
-    const changeInputValue = (event) => {
+    const changeInputValue = (event:any) => {
         const { name, value } = event.target
         setUserSignup({ ...userSignup, [name]: value });
     }
@@ -44,7 +44,7 @@ const Signup = () => {
     return (
         <Container>
             <Header as="h1" content="Sign Up"></Header>
-            <Form>
+            <Form onSubmit={signUp}>
                 <Form.Group widths='equal'>
                     <Form.Field>
                         <Label>User Name</Label>
@@ -89,7 +89,7 @@ const Signup = () => {
                     </Form.Field>
                 </Form.Group>
                 {/* <Link to={{ pathname: "/signin" }}> */}
-                    <Button onClick={signUp} positive >SignUp</Button>
+                    <Button type="submit" positive >SignUp</Button>
                 {/* </Link> */}
             </Form>
         </Container >

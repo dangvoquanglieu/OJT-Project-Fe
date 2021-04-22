@@ -18,7 +18,7 @@ const Signin = () => {
     const [userSignin, setUserSignin] = useState(userSigninCurrent);
 
     //hàm xử lý form
-    const changeInputValue = (event) => {
+    const changeInputValue = (event:any) => {
         const { name, value } = event.target
         setUserSignin({ ...userSignin, [name]: value });
     }
@@ -31,7 +31,7 @@ const Signin = () => {
     return (
         <Container>
             <Header as="h1" content="Login"></Header>
-            <Form>
+            <Form onSubmit={signIn}>
                 <Form.Field width='6'>
                     <Label>User Name</Label>
                     <Input required name="userName" onChange={changeInputValue} placeholder='User Name' />
@@ -41,7 +41,7 @@ const Signin = () => {
                     <Input required type="password" name="password" onChange={changeInputValue} placeholder='Password' />
                 </Form.Field>
                 {/* <Link to={{ pathname: "/home" }}> */}
-                    <Button positive onClick={signIn} type='submit'>SignIn</Button>
+                    <Button positive type="submit">SignIn</Button>
                 {/* </Link> */}
             </Form>
         </Container>
