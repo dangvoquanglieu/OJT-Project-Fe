@@ -8,31 +8,95 @@ import {
   Grid,
 } from "semantic-ui-react";
 import Styles from "./signin.module.css";
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { sendInforUserSignin } from "../../Redux/Action/userAction";
+import axios from "axios";
+import { HubConnectionBuilder } from "@microsoft/signalr";
+import "react-chat-widget/lib/styles.css";
+import { useHistory  } from 'react-router-dom';
+import { Redirect } from "react-router";
+
+
+const Ren = (user: any) => {
+  return (
+    <div>
+      <h1>{user.userName}</h1>
+      <h1>{user.password}</h1>
+    </div>
+  );
+};
+
+interface message {
+  name: string;
+  text: string;
+}
 
 const Signin = () => {
   const dispatch = useDispatch();
-
+  const history = useHistory();
   //khởi tạo đối tượng
-  const userSigninCurrent = {
-    userName: "",
-    password: "",
-  };
+  interface userSigninCurrent {
+    username: string;
+    password: string;
+  }
+
+  const [chat, setChat] = useState<userSigninCurrent[]>([]);
+  const [content, setContent] = useState<Array<string>>([]);
+
+  // const handleNewUserMessage = (newMessage: any) => {
+  //   const mess:message={
+  //     name:"huy",
+  //     text:newMessage
+  //   }
+  //   sendmessage(mess);
+  // };
+
+  // const fotmatMess=(user:any)=>{
+  //   addResponseMessage("["+user.name+"] : "+user.text);
+  // }
+  
+
+  // useEffect(() => {
+  //   const connection = new HubConnectionBuilder()
+  //     .withUrl("https://localhost:44381/hubs/chat")
+  //     .withAutomaticReconnect()
+  //     .build();
+
+  //     connection
+  //     .start()
+  //     .then((rs) => {
+  //       console.log("Connected!");
+  //       connection.on("ReceiveMessage", (message) => {
+  //         fotmatMess(message);         
+  //       });
+  //     })
+  //     .catch((e) => {
+  //       console.log(e);
+  //     });
+  // }, []);
 
   //tạo state và hàm setState user signin
-  const [userSignin, setUserSignin] = useState(userSigninCurrent);
-
+  const [userSignin, setUserSignin] = useState<userSigninCurrent[]>([]);
   //hàm xử lý form
   const changeInputValue = (event: any) => {
     const { name, value } = event.target;
     setUserSignin({ ...userSignin, [name]: value });
   };
-
+  // const sendmessage = async (userSignin: any) => {
+  //   try {
+  //     await axios
+  //       .post("https://localhost:44381/api/chat/messages", userSignin)
+  //       .catch((e) => {
+  //         console.log(e);
+  //       });
+  //   } finally {
+  //   }
+  // };
   //hàm signin
   const signIn = () => {
     dispatch(sendInforUserSignin(userSignin));
+   history.replace("/chat");
   };
 
   return (
@@ -49,16 +113,17 @@ const Signin = () => {
               Sign into your account
             </Header>
             <Form>
-              <Form.Field className={Styles.customFormFiled} >
-                <Form.Input error={{content:"asdasdasd", pointing: 'left'}}
+              <Form.Field className={Styles.customFormFiled}>
+                <Form.Input
+                  error={{ content: "asdasdasd", pointing: "left" }}
                   input={
                     <input
                       required
-                      name="userName"
+                      name="UserName"
                       onChange={changeInputValue}
                       placeholder="User Name"
                       type="text"
-                      className={Styles.inputText}  
+                      className={Styles.inputText}
                     />
                   }
                 ></Form.Input>
@@ -68,7 +133,7 @@ const Signin = () => {
                   input={
                     <input
                       required
-                      name="password"
+                      name="Password"
                       onChange={changeInputValue}
                       placeholder="Password"
                       type="password"
@@ -104,7 +169,12 @@ const Signin = () => {
             </div>
           </div>
         </Grid.Column>
+
+        <Grid.Column>
+          <h1>{content}</h1>
+        </Grid.Column>
       </Grid.Row>
+      {/* <Widget handleNewUserMessage={handleNewUserMessage} /> */}
     </Grid>
   );
 };
