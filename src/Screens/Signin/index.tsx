@@ -1,10 +1,12 @@
-import { Container, Button, Form, Input, Label, Header } from 'semantic-ui-react';
+import { Container, Button, Form, Input, Label, Header, Grid, Segment, Message, Image } from 'semantic-ui-react';
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { sendInforUserSignin } from '../../Redux/Action/userAction';
 import { Link, Redirect } from "react-router-dom";
-import { useSelector } from "react-redux"; 
+import { useSelector } from "react-redux";
 import { RootState } from "../../Configs/store";
+import Styles from "./signin.module.css";
+// import styles from "./signin.module.css";
 const Signin = () => {
 
     const customer = useSelector((state: RootState) => state.userReducer.credentials);
@@ -33,26 +35,40 @@ const Signin = () => {
 
     return (
 
-        <Container>
-
+        <div>
             {customer === null ? <div>
-                <Header as="h1" content="Login"></Header>
-                <Form onSubmit={signIn}>
-                    <Form.Field width='6'>
-                        <Label>User Name</Label>
-                        <Input required name="userName" onChange={changeInputValue} placeholder='User Name' />
-                    </Form.Field>
-                    <Form.Field width='6'>
-                        <Label>Password</Label>
-                        <Input required type="password" name="password" onChange={changeInputValue} placeholder='Password' />
-                    </Form.Field>
-                    {/* <Link to={{ pathname: "/" }}> */}
-                    <Button positive type="submit">SignIn</Button>
+                <Grid textAlign='center' style={{ height: '100vh' }} verticalAlign='middle'>
+                    <Grid.Column style={{ maxWidth: 450 }}>
+                        <Header as='h2' color='teal' textAlign='center'>
+                            <Image src='https://react.semantic-ui.com/logo.png' /> Log-in to your account
+                        </Header>
+                        <Form size='large' onSubmit={signIn}>
+                            <Segment stacked>
+                                <Form.Input required name="userName" onChange={changeInputValue} fluid icon='user' iconPosition='left' placeholder='UserName' />
+                                <Form.Input
+                                    required
+                                    fluid
+                                    icon='lock'
+                                    iconPosition='left'
+                                    placeholder='Password'
+                                    type='password'
+                                    name="password"
+                                    onChange={changeInputValue}
+                                />
 
-                    {/* </Link> */}
-                </Form>
+                                <Button type="submit" color='teal' fluid size='large'>
+                                    Login
+                                </Button>
+                            </Segment>
+                        </Form>
+                        <Message>
+                            New to us? <a href='/signup'>Sign Up</a>
+                        </Message>
+                    </Grid.Column>
+                </Grid>
             </div> : <Redirect to="/"></Redirect>}
-        </Container>
+
+        </div>
     )
 }
 

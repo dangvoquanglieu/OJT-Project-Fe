@@ -1,4 +1,4 @@
-import { Button } from "semantic-ui-react";
+import { Button, Card, Header, Image, Grid, Rating } from "semantic-ui-react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../Configs/store";
 import { useDispatch } from "react-redux";
@@ -41,25 +41,26 @@ const ProductItem = ({ product }: any) => {
         })
     };
     return (
-        <div className="card">
-            <div className="image">
-                <img src={product.img} />
-            </div>
-            <div className="content">
-                <div className="header">{product.name}</div>
-                <div className="meta">
-                    <a>{product.price}</a>
-                </div>
-                <div className="description">
-                    {product.catelogy}
-                </div>
-            </div>
-            <div className="extra content">
-                <Link to={{ pathname: "/shoppingCart" }} >
-                    <Button onClick={addToCart}>Add To Cart</Button>
-                </Link>
-            </div>
-        </div>
+        <Grid.Column>
+            <Card>
+                {/* <Card.Content> */}
+                <Image src={product.img} size='big' />
+                <Card.Content textAlign="center">
+                    <Card.Header textAlign="center">{product.name}</Card.Header>
+                    <Card.Meta textAlign="center">
+                        <span>{product.price}</span>
+                    </Card.Meta>
+                    <Card.Description textAlign="center">
+                        <Rating icon='star' defaultRating={5} maxRating={5} />
+                    </Card.Description>
+                </Card.Content>
+                <Card.Content textAlign="center">
+                    <Link to={{ pathname: "/shoppingCart" }} >
+                        <Button nverted color='teal' onClick={addToCart}>Add To Cart</Button>
+                    </Link>
+                </Card.Content>
+            </Card>
+        </Grid.Column>
     )
 }
 

@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../Configs/store";
-import { Button } from "semantic-ui-react";
+import { Button, Checkbox, Header, Icon, Image, Table } from "semantic-ui-react";
 import { ACTION } from "../../Redux/ActionType/actionType";
 import { Link, Redirect } from "react-router-dom";
 
@@ -82,38 +82,85 @@ const ShoppingCart = () => {
     }
 
     const renderItem = () => rows.map((row: any) => (
-        <tr>
-            <td data-label="Name">{row.productCart.name}</td>
-            <td data-label="Age">{row.productCart.catelogy}</td>
-            <td data-label="Job">{row.productCart.price}</td>
-            <td data-label="Job">
-                <img width="80px" src={row.productCart.img}></img>
-            </td>
-            <td data-label="Job">{row.quantity}</td>
-            <Button onClick={() => increaseProduct(row.productCart.id)} >+</Button>
-            <Button onClick={() => decreaseProduct(row.productCart.id)} >-</Button>
-            <Button onClick={() => removeCart(row.productCart.id)}> Delete</Button>
-        </tr>
+        <Table.Row>
+            <Table.Cell collapsing>
+                <Checkbox slider onClick={() => removeCart(row.productCart.id)} />
+            </Table.Cell>
+            <Table.Cell>
+                <Image src={row.productCart.img} size='tiny' verticalAlign='middle' />{' '}
+                <span> {row.productCart.name}</span>
+            </Table.Cell>
+            <Table.Cell>{row.productCart.catelogy}</Table.Cell>
+            <Table.Cell>{row.productCart.price}</Table.Cell>
+            <Table.Cell>
+                <Button.Group>
+                    <Button
+                        icon
+                        size='small'
+                        basic
+                        color='teal'
+                        onClick={() => increaseProduct(row.productCart.id)}
+                    >
+                        <Icon name='plus' /></Button>
+                    <Button basic color='teal'>{row.quantity}</Button>
+                    <Button
+                        icon
+                        size='small'
+                        basic
+                        color='teal'
+                        onClick={() => decreaseProduct(row.productCart.id)}
+                    >
+                        <Icon name='minus' /></Button>
+                </Button.Group>
+            </Table.Cell>
+        </Table.Row>
     ))
     return (
         <div>
-            <Link to={{ pathname: "/checkOut" }}>
-                <Button variant="contained"> Checkoout</Button>
-            </Link> 
-            <table className="ui celled table">
-                <thead>
-                    <tr><th>Name</th>
-                        <th>Category</th>
-                        <th>Price</th>
-                        <th>Img</th>
-                        <th>Quantity</th>
-                        <th>Option</th>
-                    </tr></thead>
-                <tbody>
-                    {renderItem()}
-                </tbody>
-                <div>Total mount: {total}</div>
-            </table>
+            {customer === null ? <Redirect to="/signin"></Redirect> :
+                <div>
+                    <Header as='h2' icon textAlign='center'>
+                        <Icon name='shopping cart' circular />
+                        <Header.Content>Shopping Cart</Header.Content>
+                    </Header>
+                    <Table celled compact definition>
+                        <Table.Header fullWidth>
+                            <Table.Row>
+                                <Table.HeaderCell>Delete</Table.HeaderCell>
+                                <Table.HeaderCell>Name</Table.HeaderCell>
+                                <Table.HeaderCell>Category</Table.HeaderCell>
+                                <Table.HeaderCell>Price</Table.HeaderCell>
+                                <Table.HeaderCell>Quantity</Table.HeaderCell>
+                            </Table.Row>
+                        </Table.Header>
+
+                        <Table.Body>
+
+                            {renderItem()}
+                        </Table.Body>
+
+                        <Table.Footer fullWidth>
+                            <Table.Row>
+                                <Table.HeaderCell />
+                                <Table.HeaderCell colSpan='4'>
+                                    <Link to={{ pathname: "/checkOut" }}>
+                                        <Button
+                                            floated='right'
+                                            icon
+                                            labelPosition='left'
+                                            size='small'
+                                            color='teal'
+                                        >
+                                            <Icon name='payment' /> Checkout</Button>
+                                    </Link>
+                                    <Button color='black' floated='right' disabled size='small'>Total mount: {total}</Button>
+                                </Table.HeaderCell>
+                            </Table.Row>
+                        </Table.Footer>
+                    </Table>
+                </div>
+            }
+
         </div>
     )
 }

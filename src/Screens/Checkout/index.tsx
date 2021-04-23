@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import { Redirect } from "react-router";
-import { Button } from "semantic-ui-react";
+import { Button, Header, Icon, Image, Table } from "semantic-ui-react";
 import { RootState } from "../../Configs/store";
 
 
@@ -21,41 +21,67 @@ const Checkout = () => {
     }
 
     const renderItem = () => rows.map((row: any) => (
-        <tr>
-            <td data-label="Name">{row.productCart.name}</td>
-            <td data-label="Age">{row.productCart.catelogy}</td>
-            <td data-label="Job">{row.productCart.price}</td>
-            <td data-label="Job">
-                <img width="80px" src={row.productCart.img}></img>
-            </td>
-            <td data-label="Job">{row.quantity}</td>
-        </tr>
+        <Table.Row>
+            <Table.Cell>
+                <Image src={row.productCart.img} size='tiny' verticalAlign='middle' />{' '}
+                <span> {row.productCart.name}</span>
+            </Table.Cell>
+            <Table.Cell>{row.productCart.catelogy}</Table.Cell>
+            <Table.Cell>{row.productCart.price}</Table.Cell>
+            <Table.Cell>{row.quantity}</Table.Cell>
+        </Table.Row>
     ))
     return (
         <div>
             {customer === null ? <Redirect to="/signin"></Redirect> :
                 <div>
-                    <h1>{userLogin.firstName + " "}{userLogin.lastName + " (+84)"} {userLogin.phoneNumber + " "} {userLogin.address} </h1>
-                    <table className="ui celled table">
-                        <thead>
-                            <tr><th>Name</th>
-                                <th>Category</th>
-                                <th>Price</th>
-                                <th>Img</th>
-                                <th>Quantity</th>
+                    <Table celled compact definition>
+                        <Table.Header fullWidth>
+                            <Table.Row>
+                                <Table.HeaderCell>Name</Table.HeaderCell>
+                                <Table.HeaderCell>Category</Table.HeaderCell>
+                                <Table.HeaderCell>Price</Table.HeaderCell>
+                                <Table.HeaderCell>Quantity</Table.HeaderCell>
+                            </Table.Row>
+                        </Table.Header>
 
-                            </tr></thead>
-                        <tbody>
+                        <Table.Body>
+
                             {renderItem()}
-                        </tbody>
-                        <div>Total mount: {total}</div>
-                    </table>
-                    <div>
-                        <Button>Pay</Button>
-                    </div>
+                        </Table.Body>
+
+                        <Table.Footer fullWidth>
+                            <Table.Row>
+                                <Table.HeaderCell colSpan='4'>
+                                    <div>
+                                        <Header as='h2' icon textAlign='center'>
+                                            <Icon name='users' circular />
+                                            <Header.Content>{userLogin.firstName + " " + userLogin.lastName}</Header.Content>
+                                            <Header.Subheader>
+                                                {userLogin.email + "/" + userLogin.phoneNumber}
+                                            </Header.Subheader>
+                                            <Header.Subheader>
+                                                {userLogin.address}
+                                            </Header.Subheader>
+                                        </Header>
+                                    </div>
+                                    {/* <Link to={{ pathname: "/checkOut" }}> */}
+                                    <Button
+                                        floated='right'
+                                        icon
+                                        labelPosition='left'
+                                        size='small'
+                                        color='teal'
+                                    >
+                                        <Icon name='payment' />Order</Button>
+                                    {/* </Link> */}
+                                    <Button color='black' floated='right' disabled size='small'>Total mount: {total}</Button>
+                                </Table.HeaderCell>
+                            </Table.Row>
+                        </Table.Footer>
+                    </Table>
                 </div>
             }
-
         </div>
     )
 }

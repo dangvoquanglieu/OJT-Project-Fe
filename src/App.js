@@ -12,6 +12,7 @@ import ShoppingCart from './Screens/ShoppingCart';
 import Checkout from './Screens/Checkout';
 function App() {
   const dispatch = useDispatch();
+  
   useEffect(() => {
     const credentialsStr = localStorage.getItem("credentials");
     if (credentialsStr) {

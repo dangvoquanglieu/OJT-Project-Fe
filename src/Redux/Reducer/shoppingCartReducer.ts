@@ -17,6 +17,8 @@ const reducer = (state = initialState, { type = "", payload = {cart: [], total: 
             return { ...state, cart: payload.cart, totalAmount: payload.total, totalCartItem: payload.totalCartItem }
         case ACTION.DECREASE_PRODUCT:
             return { ...state, cart: payload.cart, totalAmount: payload.total, totalCartItem: payload.totalCartItem }
+            case ACTION.LOGOUT_USER:
+            return { ...state, cart: [], totalAmount: 0, totalCartItem: 0 };
         default:
             return state;
     }
