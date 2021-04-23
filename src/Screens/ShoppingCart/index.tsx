@@ -1,16 +1,18 @@
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../Configs/store";
-import {Button} from "semantic-ui-react";
-import {ACTION} from "../../Redux/ActionType/actionType";
+import { Button } from "semantic-ui-react";
+import { ACTION } from "../../Redux/ActionType/actionType";
+import { Link, Redirect } from "react-router-dom";
 
 const ShoppingCart = () => {
+    const customer = useSelector((state: RootState) => state.userReducer.credentials);
     const cart = useSelector((state: RootState) => state.shoppingCartReducer.cart);
     let totalCartItem = useSelector((state: RootState) => state.shoppingCartReducer.totalCartItem);
     let totalAmount = useSelector((state: RootState) => state.shoppingCartReducer.totalAmount);
     const rows = useSelector((state: RootState) => state.shoppingCartReducer.cart);
     const total = useSelector((state: RootState) => state.shoppingCartReducer.totalAmount);
     const dispatch = useDispatch();
-    const removeCart = (id:any) => {
+    const removeCart = (id: any) => {
         const cloneCart = [...cart]
         const index = cloneCart.findIndex((item) => {
             return item.productCart.id === id;
@@ -32,7 +34,7 @@ const ShoppingCart = () => {
         })
     };
 
-    const increaseProduct = (id:any) => {
+    const increaseProduct = (id: any) => {
         const cloneCart = [...cart];
         const index = cloneCart.findIndex((item) => {
             return item.productCart.id === id;
@@ -52,7 +54,7 @@ const ShoppingCart = () => {
         })
     }
 
-    const decreaseProduct = (id:any) => {
+    const decreaseProduct = (id: any) => {
         const cloneCart = [...cart];
         const index = cloneCart.findIndex((item) => {
             return item.productCart.id === id;
@@ -78,6 +80,7 @@ const ShoppingCart = () => {
             }
         })
     }
+
     const renderItem = () => rows.map((row: any) => (
         <tr>
             <td data-label="Name">{row.productCart.name}</td>
@@ -93,21 +96,25 @@ const ShoppingCart = () => {
         </tr>
     ))
     return (
-        <table className="ui celled table">
-            <thead>
-                <tr><th>Name</th>
-                    <th>Category</th>
-                    <th>Price</th>
-                    <th>Img</th>
-                    <th>Quantity</th>
-                    <th>Option</th>
-                </tr></thead>
-            <tbody>
-                {renderItem()}
-            </tbody>
-            <div>Total mount: {total}</div>
-        </table>
-        
+        <div>
+            <Link to={{ pathname: "/checkOut" }}>
+                <Button variant="contained"> Checkoout</Button>
+            </Link> 
+            <table className="ui celled table">
+                <thead>
+                    <tr><th>Name</th>
+                        <th>Category</th>
+                        <th>Price</th>
+                        <th>Img</th>
+                        <th>Quantity</th>
+                        <th>Option</th>
+                    </tr></thead>
+                <tbody>
+                    {renderItem()}
+                </tbody>
+                <div>Total mount: {total}</div>
+            </table>
+        </div>
     )
 }
 

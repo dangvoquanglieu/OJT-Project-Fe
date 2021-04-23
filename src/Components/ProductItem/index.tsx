@@ -10,7 +10,6 @@ const ProductItem = ({ product }: any) => {
     const cart = useSelector((state: RootState) => state.shoppingCartReducer.cart);
     let totalCartItem = useSelector((state: RootState) => state.shoppingCartReducer.totalCartItem);
     let totalAmount = useSelector((state: RootState) => state.shoppingCartReducer.totalAmount);
-
     const addToCart = () => {
         const cloneCart = [...cart];
         const cartItem = {
