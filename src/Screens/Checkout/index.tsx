@@ -15,6 +15,7 @@ const Checkout = () => {
         email: "",
         address: "",
         phoneNumber: "",
+        role: "",
     };
     if (customer != null) {
         userLogin = customer;
@@ -31,9 +32,13 @@ const Checkout = () => {
             <Table.Cell>{row.quantity}</Table.Cell>
         </Table.Row>
     ))
+
+    const order = () => {
+        console.log(rows);
+    }
     return (
         <div>
-            {customer === null ? <Redirect to="/signin"></Redirect> :
+            {userLogin.role != "Customer" ? <Redirect to="/signin"></Redirect> :
                 <div>
                     <Table celled compact definition>
                         <Table.Header fullWidth>
@@ -72,6 +77,7 @@ const Checkout = () => {
                                         labelPosition='left'
                                         size='small'
                                         color='teal'
+                                        onClick={order}
                                     >
                                         <Icon name='payment' />Order</Button>
                                     {/* </Link> */}
