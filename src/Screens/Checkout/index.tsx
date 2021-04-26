@@ -2,14 +2,14 @@ import { useSelector } from "react-redux";
 import { Redirect } from "react-router";
 import { Button, Header, Icon, Image, Table } from "semantic-ui-react";
 import { RootState } from "../../Configs/store";
-
-
+import {createOrder} from "../../Redux/Action/shoppingCartAction";
 
 const Checkout = () => {
     const customer = useSelector((state: RootState) => state.userReducer.credentials);
     const rows = useSelector((state: RootState) => state.shoppingCartReducer.cart);
-    const total = useSelector((state: RootState) => state.shoppingCartReducer.totalAmount);
+    const totalAmount = useSelector((state: RootState) => state.shoppingCartReducer.totalAmount);
     let userLogin = {
+        userName: "",
         firstName: "",
         lastName: "",
         email: "",
@@ -34,11 +34,27 @@ const Checkout = () => {
     ))
 
     const order = () => {
-        console.log(rows);
+        const order = {
+            userName: userLogin.userName,
+            adress: userLogin.address,
+            phone: userLogin.phoneNumber,
+            total: totalAmount,
+            cart: [{}],
+        }
+        rows.map( (item:any) => {
+            order.cart.push({
+                idProduct: item.productCart.id,
+                productName: item.productCart.name,
+                amount: item.quantity,
+                price: item.productCart.price,
+            })
+        })
+        console.log(order);
+        createOrder(order);
     }
     return (
         <div>
-            {userLogin.role != "Customer" ? <Redirect to="/signin"></Redirect> :
+            {userLogin.role !== "Customer" ? <Redirect to="/signin"></Redirect> :
                 <div>
                     <Table celled compact definition>
                         <Table.Header fullWidth>
@@ -81,7 +97,7 @@ const Checkout = () => {
                                     >
                                         <Icon name='payment' />Order</Button>
                                     {/* </Link> */}
-                                    <Button color='black' floated='right' disabled size='small'>Total mount: {total}</Button>
+                                    <Button color='black' floated='right' disabled size='small'>Total mount: {totalAmount}</Button>
                                 </Table.HeaderCell>
                             </Table.Row>
                         </Table.Footer>

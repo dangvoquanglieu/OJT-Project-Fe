@@ -1,4 +1,4 @@
-import { Menu, Dropdown, Input, Button, Icon } from 'semantic-ui-react';
+import { Menu, Dropdown, Input} from 'semantic-ui-react';
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { logoutUser } from "../../Redux/Action/userAction";

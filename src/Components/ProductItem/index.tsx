@@ -1,4 +1,4 @@
-import { Button, Card, Header, Image, Grid, Rating } from "semantic-ui-react";
+import { Button, Card, Image, Grid, Rating } from "semantic-ui-react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../Configs/store";
 import { useDispatch } from "react-redux";
@@ -43,7 +43,6 @@ const ProductItem = ({ product }: any) => {
     return (
         <Grid.Column>
             <Card>
-                {/* <Card.Content> */}
                 <Image src={product.img} size='big' />
                 <Card.Content textAlign="center">
                     <Card.Header textAlign="center">{product.name}</Card.Header>

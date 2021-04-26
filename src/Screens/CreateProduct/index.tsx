@@ -1,10 +1,11 @@
+import { useState } from "react";
 import { Link, Redirect } from "react-router-dom"
-import { Button, Form, Grid, Header, Icon, Message, Segment } from "semantic-ui-react"
-import { useState } from 'react';
+import { Button, Form, Grid, Header, Icon, Message, Segment } from "semantic-ui-react";
+import { createProduct } from '../../Redux/Action/productAction';
 import { useDispatch, useSelector } from "react-redux";
-import { updateProduct } from '../../Redux/Action/productAction';
 import { RootState } from "../../Configs/store";
-const ProductDetail = ({ location }: any) => {
+
+const CreateProduct = () => {
     const customer = useSelector((state: RootState) => state.userReducer.credentials);
 
     let authen = {
@@ -14,6 +15,7 @@ const ProductDetail = ({ location }: any) => {
     if (customer != null) {
         authen = customer;
     }
+
     const dispatch = useDispatch();
 
     const productCurrent = {
@@ -23,26 +25,27 @@ const ProductDetail = ({ location }: any) => {
         dateCreate: new Date().toLocaleString(),
         img: "",
     }
-    const [product, setProduct] = useState(location.state ? { ...location.state } : productCurrent);
+
+    const [product, setProduct] = useState(productCurrent);
 
     const changeInputValue = (event: any) => {
         const { name, value } = event.target;
         setProduct({ ...product, [name]: value });
-        console.log(product);
     }
 
-    const update = () => {
+    const create = () => {
         product.price = Number.parseInt(product.price + "");
         console.log(product);
-        dispatch(updateProduct(location.state.id, product));
+        dispatch(createProduct(product));
     }
+
     return (
         <Grid textAlign='center' style={{ height: '100vh' }} verticalAlign='middle'>
             {authen.role === "Admin" ? <Grid.Column style={{ maxWidth: 450 }}>
                 <Header as='h2' color='teal' textAlign='center'>
-                    <Icon className="edit" /> Update Product
+                    <Icon className="edit" /> Create Product
                         </Header>
-                <Form size='large' onSubmit={update}>
+                <Form size='large' onSubmit={create}>
                     <Segment stacked>
                         <Form.Input
                             type="text"
@@ -50,7 +53,7 @@ const ProductDetail = ({ location }: any) => {
                             fluid icon='info'
                             iconPosition='left'
                             placeholder='Name'
-                            defaultValue={product.name}
+                            required
                             onChange={changeInputValue}
                         ></Form.Input>
                         <Form.Input
@@ -60,10 +63,9 @@ const ProductDetail = ({ location }: any) => {
                             fluid icon='money bill alternate'
                             iconPosition='left'
                             placeholder='Price'
-                            defaultValue={product.price}
                             onChange={changeInputValue}
                         />
-                        <Form.Input defaultValue={product.img} onChange={changeInputValue} required name="img" fluid icon='file image' iconPosition='left' placeholder='Image' />
+                        <Form.Input onChange={changeInputValue} required name="img" fluid icon='file image' iconPosition='left' placeholder='Image' />
                         <Form.Input
                             required
                             name="catelogy"
@@ -71,9 +73,7 @@ const ProductDetail = ({ location }: any) => {
                             iconPosition='left'
                             placeholder='Description'
                             onChange={changeInputValue}
-                            defaultValue={product.catelogy}
                         />
-
                         <Button type="submit" color='teal' fluid size='large'>
                             Save
                                 </Button>
@@ -87,4 +87,4 @@ const ProductDetail = ({ location }: any) => {
     )
 }
 
-export default ProductDetail
+export default CreateProduct

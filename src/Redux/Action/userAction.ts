@@ -7,7 +7,7 @@ const ROOT_URL = "https://localhost:44381/api/customers/";
 export const sendInforUserSignin = (data: any) => (dispatch: Dispatch) => {
     dbData(ROOT_URL + 'authenticate').createData(data)
         .then(res => {
-            console.log(res)
+            console.log(res.data)
             dispatch({
                 type: ACTION.SIGNIN_USER,
                 payload: res.data

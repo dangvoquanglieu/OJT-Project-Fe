@@ -15,3 +15,41 @@ export const getProduct = () => (dispatch: Dispatch) => {
         })
         .catch(err => console.log(err));
 }
+
+export const createProduct = (data: any) => (dispatch: Dispatch) => {
+    dbData(ROOT_URL).createData(data)
+        .then(res => {
+            console.log(res.data);
+            dispatch({
+                type: ACTION.CREATE_PRODUCT,
+                payload: res.data
+            })
+            
+        })
+        .catch(err => console.log(err));
+}
+
+
+export const updateProduct = (id: any, data: any) => (dispatch: Dispatch) => {
+    console.log(id);
+    dbData(ROOT_URL).updateData(id, data)
+        .then(res => {
+            dispatch({
+                type: ACTION.UPDATE_PRODUCT,
+                payload: res.data
+            })
+        })
+        .catch(err => console.log(err));
+
+}
+
+export const deleteProduct = (id: any) => (dispatch: Dispatch) => {
+    dbData(ROOT_URL).deleteData(id)
+        .then(res => {
+            dispatch({
+                type: ACTION.DELETE_PRODUCT,
+                payload: id
+            })
+        })
+        .catch(err => console.log(err));
+}

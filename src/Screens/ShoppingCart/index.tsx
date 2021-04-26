@@ -19,7 +19,7 @@ const ShoppingCart = () => {
         });
         console.log(index);
         console.log(id);
-        if (index != -1) {
+        if (index !== -1) {
             totalAmount -= cloneCart[index].quantity * cloneCart[index].productCart.price;
             totalCartItem -= cloneCart[index].quantity;
             cloneCart.splice(index, 1);
@@ -39,7 +39,7 @@ const ShoppingCart = () => {
         const index = cloneCart.findIndex((item) => {
             return item.productCart.id === id;
         });
-        if (index != -1) {
+        if (index !== -1) {
             cloneCart[index].quantity++;
             totalAmount += cloneCart[index].productCart.price;
             totalCartItem++;
@@ -59,7 +59,7 @@ const ShoppingCart = () => {
         const index = cloneCart.findIndex((item) => {
             return item.productCart.id === id;
         });
-        if (index != -1) {
+        if (index !== -1) {
             if (cloneCart[index].quantity > 0) {
                 cloneCart[index].quantity--;
                 totalAmount -= cloneCart[index].productCart.price;

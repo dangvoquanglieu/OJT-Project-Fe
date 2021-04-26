@@ -1,13 +1,10 @@
-import React, { useState } from 'react'
-import { Container, Button, Form, Input, Label, Header, Grid, Segment, Message, Image } from 'semantic-ui-react';
+import { useState } from 'react'
+import { Container, Button, Form, Label, Header, Grid, Segment, Message, Image } from 'semantic-ui-react';
 import { useDispatch } from 'react-redux';
 import { sendInforUserSignup } from '../../Redux/Action/userAction';
-import { useSelector } from "react-redux";
-import { RootState } from "../../Configs/store";
 import { Redirect } from 'react-router';
 
 const Signup = () => {
-    const customer = useSelector((state: RootState) => state.userReducer.credentials);
     const dispatch = useDispatch();
 
     //khởi tạo đối tượng user
