@@ -1,9 +1,10 @@
 import { Link, Redirect } from "react-router-dom"
-import { Button, Form, Grid, Header, Icon, Message, Segment } from "semantic-ui-react"
+import { Button, Form, Grid, Header, Icon, Image, Message, Segment } from "semantic-ui-react"
 import { useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { updateProduct } from '../../Redux/Action/productAction';
 import { RootState } from "../../Configs/store";
+import { storage } from "../../Configs/firebase";
 const ProductDetail = ({ location }: any) => {
     const customer = useSelector((state: RootState) => state.userReducer.credentials);
 
@@ -24,6 +25,19 @@ const ProductDetail = ({ location }: any) => {
         img: "",
     }
     const [product, setProduct] = useState(location.state ? { ...location.state } : productCurrent);
+
+    const [url, setUrl] = useState(product.img);
+    async function handleChange(event: any) {
+        if (event.target.files[0]) {
+            await storage.ref(`images/${event.target.files[0].name}`).put(event.target.files[0]);
+            await storage.ref("images").child(event.target.files[0].name).getDownloadURL()
+                .then(url => {
+                    setUrl(url);
+                    product.img = url;
+                    console.log(product.img);
+                })
+        }
+    }
 
     const changeInputValue = (event: any) => {
         const { name, value } = event.target;
@@ -51,6 +65,7 @@ const ProductDetail = ({ location }: any) => {
                             iconPosition='left'
                             placeholder='Name'
                             defaultValue={product.name}
+                            required
                             onChange={changeInputValue}
                         ></Form.Input>
                         <Form.Input
@@ -63,7 +78,8 @@ const ProductDetail = ({ location }: any) => {
                             defaultValue={product.price}
                             onChange={changeInputValue}
                         />
-                        <Form.Input defaultValue={product.img} onChange={changeInputValue} required name="img" fluid icon='file image' iconPosition='left' placeholder='Image' />
+                        <Form.Input type="file" onChange={handleChange} name="img" fluid icon='file image' iconPosition='left' placeholder='Image' />
+                        <Image styles={{width: "100px"}} src={url}></Image>
                         <Form.Input
                             required
                             name="catelogy"

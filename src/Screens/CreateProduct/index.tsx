@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { Link, Redirect } from "react-router-dom"
-import { Button, Form, Grid, Header, Icon, Message, Segment } from "semantic-ui-react";
+import { Button, Form, Grid, Header, Icon, Image, Message, Segment } from "semantic-ui-react";
 import { createProduct } from '../../Redux/Action/productAction';
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../Configs/store";
+import { storage } from "../../Configs/firebase";
 
 const CreateProduct = () => {
     const customer = useSelector((state: RootState) => state.userReducer.credentials);
@@ -33,12 +34,23 @@ const CreateProduct = () => {
         setProduct({ ...product, [name]: value });
     }
 
-    const create = () => {
-        product.price = Number.parseInt(product.price + "");
-        console.log(product);
-        dispatch(createProduct(product));
+    const [url, setUrl] = useState("");
+    async function handleChange(event: any) {
+        if (event.target.files[0]) {
+            await storage.ref(`images/${event.target.files[0].name}`).put(event.target.files[0]);
+            await storage.ref("images").child(event.target.files[0].name).getDownloadURL()
+                .then(url => {
+                    setUrl(url);
+                    product.img = url;
+                    console.log(product.img);
+                })
+        }
     }
 
+    const create = () => {
+        product.price = Number.parseInt(product.price + "");
+        dispatch(createProduct(product));
+    }
     return (
         <Grid textAlign='center' style={{ height: '100vh' }} verticalAlign='middle'>
             {authen.role === "Admin" ? <Grid.Column style={{ maxWidth: 450 }}>
@@ -65,7 +77,6 @@ const CreateProduct = () => {
                             placeholder='Price'
                             onChange={changeInputValue}
                         />
-                        <Form.Input onChange={changeInputValue} required name="img" fluid icon='file image' iconPosition='left' placeholder='Image' />
                         <Form.Input
                             required
                             name="catelogy"
@@ -74,9 +85,19 @@ const CreateProduct = () => {
                             placeholder='Description'
                             onChange={changeInputValue}
                         />
+                        <Form.Input
+                            onChange={handleChange}
+                            type="file"
+                            required name="img"
+                            fluid icon='file image'
+                            iconPosition='left'
+                            placeholder='Image'>
+
+                        </Form.Input>
+                        <Image styles={{ width: "100px" }} src={url}></Image>
                         <Button type="submit" color='teal' fluid size='large'>
                             Save
-                                </Button>
+                        </Button>
                     </Segment>
                 </Form>
                 <Message>
