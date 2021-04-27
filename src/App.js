@@ -15,7 +15,9 @@ import ManageProduct from './Screens/ManageProduct';
 import { RootState } from "./Configs/store";
 import ProductDetail from "./Components/ProductDetail";
 import CreateProduct from "./Screens/CreateProduct";
-import History from "./Screens/History"
+import History from "./Screens/History";
+import AdminOrder from "./Screens/ListOrder";
+
 import { getOrder } from './Redux/Action/shoppingCartAction';
 function App() {
   const dispatch = useDispatch();
@@ -52,6 +54,7 @@ function App() {
         <Route path="/productDetail" exact component={ProductDetail} />
         <Route path="/createProduct" exact component={CreateProduct} />
         <Route path="/history" exact component={History} />
+        <Route path="/adminOrder" exact component={AdminOrder} />
       </Switch>
     </BrowserRouter>
   );

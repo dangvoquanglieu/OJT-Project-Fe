@@ -16,4 +16,5 @@ export const ACTION = {
 
     GET_ORDER: "GET_ORDER",
     ADD_ORDER: "ADD_ORDER",
+    CONFIRM_ORDER:"CONFIRM_ORDER"
 };

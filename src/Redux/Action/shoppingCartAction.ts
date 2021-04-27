@@ -1,25 +1,51 @@
 import { dbData } from "../../Configs/request";
-import { Dispatch } from 'redux';
+import { Dispatch } from "redux";
 import { ACTION } from "../ActionType/actionType";
 
 const ROOT_URL = "https://localhost:44381/api/order/";
 
 export const createOrder = (data: any) => {
-    dbData(ROOT_URL).createData(data)
-        .then(res => {
-            console.log(res.data);
-        })
-        .catch(err => console.log(err));
-}
+  dbData(ROOT_URL)
+    .createData(data)
+    .then((res) => {
+      console.log(res.data);
+    })
+    .catch((err) => console.log(err));
+};
 
 export const getOrder = (userName: any) => (dispatch: Dispatch) => {
-    dbData(ROOT_URL + userName).getData()
+  dbData(ROOT_URL + userName)
+    .getData()
+    .then((res) => {
+      dispatch({
+        type: ACTION.GET_ORDER,
+        payload: res.data,
+      });
+    })
+    .catch((err) => console.log(err));
+};
+
+export const getListOrder = () => (dispatch: Dispatch) => {
+  dbData(ROOT_URL)
+    .getData()
+    .then((res) => {
+      dispatch({
+        type: ACTION.GET_ORDER,
+        payload: res.data,
+      });
+    })
+    .catch((err) => console.log(err));
+};
+
+export const confirmOrder = (id: any, data: any) => (dispatch: Dispatch) => {
+    console.log(id);
+    dbData(ROOT_URL).updateData(id, data)   
         .then(res => {
-            console.log(res.data)
             dispatch({
-                type: ACTION.GET_ORDER,
+                type: ACTION.CONFIRM_ORDER,
                 payload: res.data
-            });
+            })
         })
         .catch(err => console.log(err));
+
 }

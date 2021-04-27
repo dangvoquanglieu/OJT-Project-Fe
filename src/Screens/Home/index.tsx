@@ -9,7 +9,7 @@ import { getOrder } from "../../Redux/Action/shoppingCartAction";
 const Home = () => {
     const dispatch = useDispatch();
     const listProduct = useSelector((state: RootState) => state.productReducer.productList);
-    const customer = useSelector((state: RootState) => state.userReducer.credentials);
+    const customer:any = useSelector((state: RootState) => state.userReducer.credentials);
     const renderProduct = () => listProduct.map((product: any, index: any) => (
         <ProductItem product={product}></ProductItem>
     ))
@@ -54,7 +54,7 @@ const Home = () => {
                     TOPS
                 </Menu.Item>
                 <Menu.Item as='a'>
-                    <Link to="/history">
+                    <Link  to="/history" >
                         <Icon name='history' />
                     HISTORY
                     </Link>

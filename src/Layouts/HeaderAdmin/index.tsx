@@ -40,6 +40,11 @@ const HeaderLayout = () => {
                     <span>Create Product</span>
                 </Link>
             </Menu.Item>
+            <Menu.Item>
+                <Link to="/adminOrder">
+                    <span>List order</span>
+                </Link>
+            </Menu.Item>
             {customer === null ?
                 <Menu.Menu position='right'>
 
