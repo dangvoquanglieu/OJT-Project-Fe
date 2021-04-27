@@ -79,7 +79,7 @@ const ProductDetail = ({ location }: any) => {
                             onChange={changeInputValue}
                         />
                         <Form.Input type="file" onChange={handleChange} name="img" fluid icon='file image' iconPosition='left' placeholder='Image' />
-                        <Image styles={{width: "100px"}} src={url}></Image>
+                        <Image styles={{ width: "100px" }} src={url}></Image>
                         <Form.Input
                             required
                             name="catelogy"

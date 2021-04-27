@@ -23,3 +23,28 @@ export const getOrder = (userName: any) => (dispatch: Dispatch) => {
         })
         .catch(err => console.log(err));
 }
+
+export const getListOrder = () => (dispatch: Dispatch) => {
+    dbData(ROOT_URL)
+      .getData()
+      .then((res) => {
+        dispatch({
+          type: ACTION.GET_ORDER,
+          payload: res.data,
+        });
+      })
+      .catch((err) => console.log(err));
+  };
+  
+  export const confirmOrder = (id: any, data: any) => (dispatch: Dispatch) => {
+      console.log(id);
+      dbData(ROOT_URL).updateData(id, data)   
+          .then(res => {
+              dispatch({
+                  type: ACTION.CONFIRM_ORDER,
+                  payload: res.data
+              })
+          })
+          .catch(err => console.log(err));
+  
+  }
