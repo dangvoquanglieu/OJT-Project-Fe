@@ -49,8 +49,14 @@ const Checkout = () => {
                 price: item.productCart.price,
             })
         })
-        console.log(order);
-        createOrder(order);
+
+        var notification={
+            message:"You have new order from user:"+order.userName
+
+        }
+        createOrder(order,notification);
+
+
     }
     return (
         <div>
